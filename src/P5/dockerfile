@@ -1,0 +1,26 @@
+FROM nginx
+WORKDIR /home
+COPY . /home
+USER root
+RUN apt-get update && apt-get install spawn-fcgi libfcgi-dev vim gcc make -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN chmod +x install.sh
+RUN chown -R nginx:nginx /etc/nginx/nginx.conf; \
+    chown -R nginx:nginx /var/cache/nginx; \
+    chown -R nginx:nginx /home; \
+    touch /var/run/nginx.pid; \
+    chown -R nginx:nginx /var/run/nginx.pid; \
+    chmod 1755 /usr/bin/wall; \
+    chmod 1755 /usr/sbin/unix_chkpwd; \
+    chmod 1755 /usr/bin/expiry; \
+    chmod 1755 /usr/bin/chage; \
+    chmod 0755 /usr/bin/chfn; \
+    chmod 0755 /usr/bin/su; \
+    chmod 0755 /usr/bin/chsh; \
+    chmod 0755 /usr/bin/umount; \
+    chmod 0755 /usr/bin/mount; \
+    chmod 0755 /usr/bin/passwd; \
+    chmod 0755 /usr/bin/newgrp; \
+    chmod 0755 /usr/bin/gpasswd;
+HEALTHCHECK NONE
+ENTRYPOINT [ "/home/install.sh" ]
+USER nginx

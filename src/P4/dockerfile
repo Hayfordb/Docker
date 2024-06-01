@@ -1,0 +1,7 @@
+FROM nginx
+COPY . /home
+WORKDIR /home
+RUN apt-get update
+RUN apt-get install spawn-fcgi libfcgi-dev vim gcc make -y
+RUN chmod +x install.sh
+ENTRYPOINT ["/home/install.sh"]

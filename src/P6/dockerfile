@@ -1,0 +1,4 @@
+FROM nginx
+USER root
+WORKDIR /home
+CMD ["nginx", "-g", "daemon off;"]
